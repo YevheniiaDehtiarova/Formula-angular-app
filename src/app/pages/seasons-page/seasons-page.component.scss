@@ -1,0 +1,17 @@
+.switch-bitton{
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 20px 30px;
+
+    @media screen and (max-width: 321px) {
+       padding: 10px 20px; 
+       font-size: 12px;
+    }
+}
+.more-link{
+   
+    @media screen and (max-width: 321px) {
+        margin-left: -50px;
+    }
+}

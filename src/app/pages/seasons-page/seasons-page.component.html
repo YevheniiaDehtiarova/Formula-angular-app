@@ -1,0 +1,49 @@
+<h1>
+  F1 CHAMPIONS: {{ startYear }} - {{ endYear }}
+</h1>
+
+
+<button (click)="toggleTheme()" class="switch-bitton">
+  Switch Theme
+</button>
+<app-table
+  [columns]="columns"
+  [rows]="rows"
+  [rowTemplate]="rowTpl"
+></app-table>
+
+<ng-template let-row="row" #rowTpl>
+    <td  #rowTpl2 class="cell">
+      {{ row.season }}
+    </td>
+    <td #rowTpl2 class="cell">
+      <app-driver [id]="row.driver.id" [nationality]="row.driver.nationality"/>
+    </td>
+    <td  #rowTpl2 class="cell">
+      {{ row.constructorName }}
+    </td>
+    <td #rowTpl2 class="cell more-link">
+      <a [routerLink]="['/race', row.season, {details: row.driver.id}]">More info</a>
+    </td>
+</ng-template>
+
+<div class="pagination d-flex justify-content-center text-align-center">
+  <app-pagination *ngIf="rows.length"
+  [currentPage]="currentPage"
+  [itemsPerPage]="itemsPerPage"
+  (pageChange)="onPageChange($event)"
+  [totalItems] ="totalRowLength"
+></app-pagination>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+.cell {
+  padding: 15px 10px;
+
+  @media screen and (max-width: 321px) {
+    font-size: 12px;
+    padding: 10px 5px;
+  }
+}
+
+.row {
+  background-color: #f5f5f5;
+
+  &:nth-child(even) {
+    background-color: #fff;
+  }
+}

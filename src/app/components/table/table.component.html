@@ -1,0 +1,23 @@
+<table class="table">
+  <thead class="thead">
+  <tr>
+    <th *ngFor="let column of columns" class="headerCell">{{ column.columnName }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let row of rows" class="row">
+    <ng-container [ngTemplateOutlet]="rowTemplate ?? defaultRow" [ngTemplateOutletContext]="{ row, columns }"></ng-container>
+  </tr>
+  </tbody>
+</table>
+
+<ng-template #defaultRow let-columns="columns" let-row="row">
+  <td class="cell" *ngFor="let column of columns">
+    {{ row[column.property] }}
+  </td>
+</ng-template>
+
+
+
+
+

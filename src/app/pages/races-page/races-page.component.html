@@ -1,0 +1,25 @@
+<app-back-button/>
+
+<h1>{{ year }}</h1>
+
+<app-table
+  [rows]="rows"
+  [columns]="columns"
+  [rowTemplate]="rowTpl"/>
+<ng-template #rowTpl let-row="row">
+    <td [ngClass]="isWinner(row)" class="cell">{{ row.raceName }}</td>
+    <td class="cell" [ngClass]="isWinner(row)">
+      <app-driver [name]="row.driver.name" [id]="row.driver.id" [nationality]="row.driver.nationality"/>
+    </td>
+    <td [ngClass]="isWinner(row)" class="cell">{{ row.constructorName }}</td>
+</ng-template>
+
+
+<div class="pagination d-flex justify-content-center text-align-center">
+  <app-pagination *ngIf="rows.length"
+  [currentPage]="currentPage"
+  [itemsPerPage]="itemsPerPage"
+  (pageChange)="onPageChange($event)"
+  [totalItems] ="totalRaceLength"
+></app-pagination>
+</div>
