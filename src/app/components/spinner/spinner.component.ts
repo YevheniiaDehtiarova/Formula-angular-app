@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { LoaderService } from 'src/app/services/loader.service';
+import { combineLatest, map } from 'rxjs';
+import { DataStore } from 'src/app/store/data.store';
 
 
 @Component({
@@ -8,5 +9,8 @@ import { LoaderService } from 'src/app/services/loader.service';
   styleUrls: ['./spinner.component.scss']
 })
 export class SpinnerComponent {
- constructor(public loader: LoaderService){}
+  public loading$ = combineLatest([this.dataStore.racesLoading$,this.dataStore.championsLoading$])
+  .pipe(map(([racesLoading, championsLoading])=> racesLoading || championsLoading))
+
+ constructor(public dataStore: DataStore){}
 }

@@ -35,15 +35,12 @@ export class DriverComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log( this.id, this.name)
     if(this.id){
-    // this.wikipediaUrl = 'http://ergast.com/api/f1/drivers/' + `${this.id}`;
     this.getWikipediaUrl(this.id);
     }
   }
 
   getWikipediaUrl(driverId: string): void {
-    // Use the Ergast API to get driver details, including Wikipedia URL
     const apiUrl = `https://ergast.com/api/f1/drivers/${driverId}.json`;
 
     console.log(apiUrl, 'apiurl')
@@ -54,22 +51,15 @@ export class DriverComponent implements OnInit {
         console.log(data, 'data in fecth')
         const driver = data.MRData.DriverTable.Drivers[0];
 
-        // Check if Wikipedia URL is available in the response
         if (driver && driver.url) {
           this.wikipediaUrl = driver.url;
-          console.log(this.wikipediaUrl, '1')
         } else {
-          // If no Wikipedia URL is available, you can create a generic link
           this.wikipediaUrl = `https://en.wikipedia.org/wiki/${this.name.replace(' ', '_')}`;
-          console.log(this.wikipediaUrl, '2')
         }
       })
       .catch((error) => {
-        console.error('Error fetching driver details:', error);
 
-        // If there's an error, create a generic Wikipedia link
         this.wikipediaUrl = `https://en.wikipedia.org/wiki/${this.name.replace(' ', '_')}`;
-        console.log(this.wikipediaUrl, '3')
       });
   }
 }

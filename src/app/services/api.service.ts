@@ -28,22 +28,16 @@ export class ApiService {
   constructor(private httpClient: HttpClient) {
   }
 
- /*public getFirstSeasons(): Observable<Champion[]> {
-    let startedSeasons = range(environment.START_YEAR, environment.START_YEAR + 6);
-    const startedRequests = startedSeasons.map(season =>
-      this.httpClient.get<ChampionsDto>(`${ this.apiUrl }${ season }/driverStandings/1.json`)
-    );
-    return forkJoin(startedRequests).pipe(map((res: ChampionsDto[]) => championsMapper(res)));
-  }*/
+
 
   public getSeasons(start: number, end: number): Observable<Champion[]> {
+    console.log(start, end, 'start and end get seasons')
     let seasons = range(start, end);
     const requests = seasons.map(season =>
       this.httpClient.get<ChampionsDto>(`${ this.apiUrl }${ season }/driverStandings/1.json`)
     );
 
       return forkJoin(requests).pipe(map((res: ChampionsDto[]) => championsMapper(res)));
-
   }
 
   public getRaceWinners(season: string): Observable<Race[]> {

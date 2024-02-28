@@ -12,7 +12,6 @@ import { RacesPageComponent } from './pages/races-page/races-page.component';
 import { TableComponent } from './components/table/table.component';
 import { DriverComponent } from './components/driver/driver.component';
 import { BackButtonComponent } from './components/back-button/back-button.component';
-import { LoadingInterceptor } from './services/loading.interceptor';
 import { CustomErrorHandler } from './services/error-handler.service';
 import { PaginationComponent } from './pages/pagination/pagination.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -41,7 +40,6 @@ import { ErrorComponent } from './pages/error/error.component';
   exports: [SeasonsPageComponent],
   providers: [
     ApiService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler
