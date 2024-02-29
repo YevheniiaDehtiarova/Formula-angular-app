@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, Observable, filter, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { championsMapper, racesMapper } from '../utils/mappers';
 import { Race, Champion, RacesDto, ChampionsDto } from '../utils/types';
+import { Injectable } from '@angular/core';
 
 const range = (start: number, stop: number, step = 1): number[] => {
   if (start >= stop)
@@ -14,9 +15,6 @@ const range = (start: number, stop: number, step = 1): number[] => {
     .map((x: number, y: number) => x + y * step);
 };
 
-
-//const seasons = range(environment.START_YEAR, environment.CURRENT_YEAR + 1);
-//const seasons = range(environment.START_YEAR + 6, environment.CURRENT_YEAR + 1);
 
 @Injectable({
   providedIn: 'root'

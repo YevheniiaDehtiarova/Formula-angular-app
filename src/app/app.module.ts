@@ -1,7 +1,7 @@
-import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
 
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,8 @@ import { CustomErrorHandler } from './services/error-handler.service';
 import { PaginationComponent } from './pages/pagination/pagination.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
 
 
 
