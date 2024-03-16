@@ -1,5 +1,6 @@
-import { createReducer } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { AppState } from './app.state';
+import * as appActions from './app.actions'
 
 
 
@@ -12,7 +13,14 @@ export const initialState: AppState = {
 
 export const appReducer = createReducer(
   initialState,
- // on(appActions.setMoviesFromLocalStorage, (state, { movies }) => ({ ...state, watchList: movies })),
+  on(appActions.loadChampionsSuccess, (state, { champions }) => {
+    console.log('Champions loaded successfully:', champions);
+    console.log(state, 'state')
+    return {...state,
+    championsList: champions
+    }
+    
+}),
 );
 
 

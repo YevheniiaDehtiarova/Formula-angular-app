@@ -3,10 +3,13 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { DataStore } from '../../store/data.store';
 import { Observable, Subject, Subscription, debounce, distinctUntilChanged, take, takeLast, takeUntil, takeWhile } from 'rxjs';
 import { Champion } from '../../utils/types';
 import { environment } from '../../../environments/environment';
+import { StoreInterface } from 'src/app/store/app.state';
+import { Store, select } from '@ngrx/store';
+import * as appActions from '../../store/app.actions';
+import { selectChampions } from 'src/app/store/app.selector';
 
 @Component({
   selector: 'app-seasons-page',
@@ -37,20 +40,22 @@ export class SeasonsPageComponent implements OnInit, OnDestroy {
     },
   ];
   private destroy$ = new Subject<void>();
-  public rows$: Observable<Champion[]> = this.store.championList$;
+  public rows$: any;
   public rows: Champion[] = [];
   public totalPages:any;
 
-  constructor(private store: DataStore) {}
+  constructor(private store: Store<StoreInterface>) {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
   ngOnInit(): void {
+    this.rows$ = this.store.pipe(select(selectChampions));
     this.totalRowLength = this.endYear - this.startYear;
     this.totalPages = Math.ceil(this.totalRowLength / this.itemsPerPage);
     this.calculateViewRows();
+    this.rows$.subscribe((row: any) => console.log(row, 'row'))
   }
 
   public toggleTheme(): void {
@@ -63,16 +68,19 @@ export class SeasonsPageComponent implements OnInit, OnDestroy {
   }
 
   public calculateViewRows(page?: number): void {
-    this.store.getChampions(this.startYear + this.itemsPerPage*(this.currentPage - 1), this.startYear + this.itemsPerPage*this.currentPage);
 
-   if(page && page === this.totalPages){
+    this.store.dispatch(appActions.loadChampions({ startYear: 2020, endYear: 2021 }));
+   // this.store.dispatch(appActions.loadChampions());
+    //this.store.getChampions(this.startYear + this.itemsPerPage*(this.currentPage - 1), this.startYear + this.itemsPerPage*this.currentPage);
+
+  /*  if(page && page === this.totalPages){
     this.store.getChampions(this.startYear + this.itemsPerPage*(page-1), this.endYear);
-   }
+   } */
   
 
-    this.rows$.pipe(takeUntil(this.destroy$), distinctUntilChanged())
+  /*   this.rows$.pipe(takeUntil(this.destroy$), distinctUntilChanged())
     .subscribe((dataRes) => {
        this.rows = dataRes;
-    });
+    }); */
   }
 }
