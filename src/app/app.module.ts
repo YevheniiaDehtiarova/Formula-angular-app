@@ -59,16 +59,7 @@ import { environment } from 'src/environments/environment';
       provide: ErrorHandler,
       useClass: CustomErrorHandler
     },
-    /* provideStoreDevtools({
-      maxAge: 25,
-      logOnly: !isDevMode(),
-      autoPause: true,
-      trace: false,
-      traceLimit: 75,
-      connectInZone: true,
-    } as StoreDevtoolsOptions) */
   ],
   bootstrap: [AppComponent],
- /*  schemas: [ CUSTOM_ELEMENTS_SCHEMA ] */
 })
 export class AppModule {}
