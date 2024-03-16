@@ -16,8 +16,14 @@ import { CustomErrorHandler } from './services/error-handler.service';
 import { PaginationComponent } from './pages/pagination/pagination.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ErrorComponent } from './pages/error/error.component';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, isDevMode } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './store/app.effects';
+import { StoreDevtoolsModule, StoreDevtoolsOptions, provideStoreDevtools } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -37,7 +43,14 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
     HttpClientModule,
     BackButtonComponent,
     TableComponent, 
-
+    StoreModule.forFeature('app', appReducer),
+    EffectsModule.forRoot([]),
+    StoreModule.forRoot({}), 
+    EffectsModule.forFeature([AppEffects]), 
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
   ],
   exports: [SeasonsPageComponent],
   providers: [
@@ -45,9 +58,17 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
     {
       provide: ErrorHandler,
       useClass: CustomErrorHandler
-    }
+    },
+    /* provideStoreDevtools({
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+      trace: false,
+      traceLimit: 75,
+      connectInZone: true,
+    } as StoreDevtoolsOptions) */
   ],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+ /*  schemas: [ CUSTOM_ELEMENTS_SCHEMA ] */
 })
 export class AppModule {}

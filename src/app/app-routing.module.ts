@@ -4,7 +4,7 @@ import { SeasonsPageComponent } from './pages/seasons-page/seasons-page.componen
 import { RacesPageComponent } from './pages/races-page/races-page.component';
 import { ErrorComponent } from './pages/error/error.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: 'seasons',
