@@ -32,7 +32,6 @@ describe('SeasonsPageComponent', () => {
   it('should test init method', () => {
     component.ngOnInit();
     const spy = spyOn(store, 'getChampions').and.callThrough();
-    store.getChampions();
     expect(spy).toHaveBeenCalled();
   });
 
