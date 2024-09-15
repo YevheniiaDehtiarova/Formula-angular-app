@@ -3,7 +3,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, Subject, Subscription, debounce, distinctUntilChanged, take, takeLast, takeUntil, takeWhile } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Champion } from '../../utils/types';
 import { environment } from '../../../environments/environment';
 import { StoreInterface } from 'src/app/store/app.state';
@@ -21,7 +21,7 @@ export class SeasonsPageComponent implements OnInit, OnDestroy {
   public startYear = environment.START_YEAR;
   public endYear = environment.CURRENT_YEAR + 1;
   currentPage = 1;
-  itemsPerPage = 6;
+  itemsPerPage = 7;
   totalRowLength: any;
 
 
@@ -40,22 +40,20 @@ export class SeasonsPageComponent implements OnInit, OnDestroy {
     },
   ];
   private destroy$ = new Subject<void>();
-  public rows$: any;
-  public rows: Champion[] = [];
-  public totalPages:any;
+  public rows$: Observable<Champion[]> | undefined;
+  public totalPages: any;
 
-  constructor(private store: Store<StoreInterface>) {}
+  constructor(private store: Store<StoreInterface>) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
   }
 
   ngOnInit(): void {
+    this.calculateViewRows();
     this.rows$ = this.store.pipe(select(selectChampions));
     this.totalRowLength = this.endYear - this.startYear;
     this.totalPages = Math.ceil(this.totalRowLength / this.itemsPerPage);
-    this.calculateViewRows();
-    this.rows$.subscribe((row: any) => console.log(row, 'row'))
   }
 
   public toggleTheme(): void {
@@ -67,20 +65,13 @@ export class SeasonsPageComponent implements OnInit, OnDestroy {
     this.calculateViewRows(page);
   }
 
-  public calculateViewRows(page?: number): void {
+  public calculateViewRows(page: number = 1): void {
+    const yearsPerPage = this.itemsPerPage;
 
-    this.store.dispatch(appActions.loadChampions({ startYear: 2020, endYear: 2021 }));
-   // this.store.dispatch(appActions.loadChampions());
-    //this.store.getChampions(this.startYear + this.itemsPerPage*(this.currentPage - 1), this.startYear + this.itemsPerPage*this.currentPage);
+    const startYearForPage = this.startYear + (page - 1) * yearsPerPage;
+    const endYearForPage = startYearForPage + yearsPerPage - 1;
 
-  /*  if(page && page === this.totalPages){
-    this.store.getChampions(this.startYear + this.itemsPerPage*(page-1), this.endYear);
-   } */
-  
-
-  /*   this.rows$.pipe(takeUntil(this.destroy$), distinctUntilChanged())
-    .subscribe((dataRes) => {
-       this.rows = dataRes;
-    }); */
+    this.store.dispatch(appActions.loadChampions({ startYear: startYearForPage, endYear: endYearForPage }));
   }
+
 }

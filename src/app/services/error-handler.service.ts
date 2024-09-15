@@ -10,6 +10,7 @@ export class CustomErrorHandler implements ErrorHandler {
   }
 
   handleError(error: any) {
+    console.log(error)
     let router = this.injector.get(Router);
     router.navigate(['/error']);
  }

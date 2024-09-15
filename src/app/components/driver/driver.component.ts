@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
+
 
 const nationalities = {
   Spanish: 'spain',
@@ -26,7 +26,7 @@ const nationalities = {
 })
 export class DriverComponent implements OnInit {
   public readonly icons: any = nationalities;
-  public wikipediaUrl: string | undefined ; 
+  public wikipediaUrl: string | undefined;
 
   @Input() public id: string = '';
   @Input() public name: string = '';
@@ -35,20 +35,21 @@ export class DriverComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if(this.id){
-    this.getWikipediaUrl(this.id);
+    //console.log(this.id, this.name, this.nationality, 'input driver properties')
+    if (this.id) {
+      this.getWikipediaUrl(this.id);
     }
   }
 
   getWikipediaUrl(driverId: string): void {
     const apiUrl = `https://ergast.com/api/f1/drivers/${driverId}.json`;
 
-    console.log(apiUrl, 'apiurl')
+    //console.log(apiUrl, 'apiurl')
 
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data, 'data in fecth')
+        //console.log(data, 'data in fecth')
         const driver = data.MRData.DriverTable.Drivers[0];
 
         if (driver && driver.url) {
