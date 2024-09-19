@@ -16,10 +16,18 @@
 
 
 <div class="pagination d-flex justify-content-center text-align-center">
-  <app-pagination *ngIf="rows.length"
+  @if(rows.length){
+    <app-pagination 
+    [currentPage]="currentPage"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
+    [totalItems] ="totalRaceLength"
+  ></app-pagination>
+  }
+<!--   <app-pagination *ngIf="rows.length"
   [currentPage]="currentPage"
   [itemsPerPage]="itemsPerPage"
   (pageChange)="onPageChange($event)"
   [totalItems] ="totalRaceLength"
-></app-pagination>
+></app-pagination> -->
 </div>

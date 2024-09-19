@@ -29,14 +29,25 @@
     </td>
 </ng-template>
 
-<div *ngIf="rows$ | async as rows" class="pagination d-flex justify-content-center text-align-center">
+@if(rows$ | async; as rows){
+  <div class="pagination d-flex justify-content-center text-align-center">
+    <app-pagination 
+    [currentPage]="currentPage"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
+    [totalItems] ="totalRowLength"
+  ></app-pagination>
+  </div>
+}
+
+<!-- <div *ngIf="rows$ | async as rows" class="pagination d-flex justify-content-center text-align-center">
   <app-pagination *ngIf="rows?.length"
   [currentPage]="currentPage"
   [itemsPerPage]="itemsPerPage"
   (pageChange)="onPageChange($event)"
   [totalItems] ="totalRowLength"
 ></app-pagination>
-</div>
+</div> -->
 
 
 

@@ -1,20 +1,31 @@
 <table class="table">
   <thead class="thead">
   <tr>
-    <th *ngFor="let column of columns" class="headerCell">{{ column.columnName }}</th>
+<!--     <th *ngFor="let column of columns" class="headerCell">{{ column.columnName }}</th> -->
+    @for(column of columns; track column){
+     <th class="headerCell">{{ column.columnName }}</th>
+    }
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let row of rows" class="row">
+<!--   <tr *ngFor="let row of rows" class="row">
     <ng-container [ngTemplateOutlet]="rowTemplate ?? defaultRow" [ngTemplateOutletContext]="{ row, columns }"></ng-container>
-  </tr>
+  </tr> -->
+  @for(row of rows; track row){
+    <tr class="row">
+      <ng-container [ngTemplateOutlet]="rowTemplate ?? defaultRow" [ngTemplateOutletContext]="{ row, columns }"></ng-container>
+    </tr>
+  }
   </tbody>
 </table>
 
 <ng-template #defaultRow let-columns="columns" let-row="row">
-  <td class="cell" *ngFor="let column of columns">
+<!--   <td class="cell" *ngFor="let column of columns">
     {{ row[column.property] }}
-  </td>
+  </td> -->
+  @for(column of columns; track column){
+  <td class="cell"> {{ row[column.property] }}</td>
+  }
 </ng-template>
 
 
